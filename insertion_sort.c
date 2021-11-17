@@ -10,6 +10,13 @@ void print_array(int *a, int n) {
 
 void insertion_sort(int *a, int n) {
     int i, j, p;
+    for (i = 1; i <= n - 1; i++) {
+        p = a[i];
+        for (j = i; j >= 1 && (p < a[j - 1]); j--) {
+            a[j] = a[j - 1];
+        }
+        a[j] = p;
+    }
 }
 
 int main(void) {
