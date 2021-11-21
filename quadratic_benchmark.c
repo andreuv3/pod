@@ -19,12 +19,12 @@ void bubble_sort(int *a, int n) {
     for (i = n - 1; i >= 1; i--) {
         int swapped = 0;
         for (j = 0; j <= i - 1; j++) {
+            comparisons++;
             if (a[j] > a[j + 1]) {
                 int aux = a[j];
                 a[j] = a[j + 1];
                 a[j + 1] = aux;
                 swapped = 1;
-                comparisons++;
             }
         }
         if (swapped == 0) {
@@ -66,9 +66,9 @@ void selection_sort(int *a, int n) {
     for (i = 0; i < n - 2; i++) {
         smaller = i;
         for (j = i + 1; j <= n - 1; j++) {
+            comparisons++;
             if (a[smaller] > a[j]) {
                 smaller = j;
-                comparisons++;
             }
         }
         int aux = a[i];
@@ -83,18 +83,43 @@ void selection_sort(int *a, int n) {
 
 int main(void) {
     int array_size;
-    printf("Informe o tamanho do array desejado: ");
-    scanf("%d", &array_size);
+    do {
+        printf("Informe o tamanho do array desejado: ");
+        scanf("%d", &array_size);
+    } while (array_size <= 0);
+
+    int array_sort_type;
+    do {
+        printf("1. Crescente");
+        printf("\n2. Decrescente");
+        printf("\n3. Aleatório");
+        printf("\nInforme o tipo de ordenação inicial:");
+        scanf("%d", &array_sort_type);
+    } while (array_sort_type < 1 || array_sort_type > 3);
 
     int i;
     int *bubble_sort_array = malloc(array_size * sizeof(int));
     int *insertion_sort_array = malloc(array_size * sizeof(int));
     int *selection_sort_array = malloc(array_size * sizeof(int));
     
-    for (i = array_size - 1; i >= 0; i--) {
-        bubble_sort_array[i] = array_size - i;
-        insertion_sort_array[i] = array_size - i;
-        selection_sort_array[i] = array_size - i;
+    if (array_sort_type == 1) {
+        for (i = 0; i < array_size; i++) {
+            bubble_sort_array[i] = i + 1;
+            insertion_sort_array[i] = i + 1;
+            selection_sort_array[i] = i + 1;
+        }
+    } else if (array_sort_type == 2) {
+        for (i = array_size - 1; i >= 0; i--) {
+            bubble_sort_array[i] = array_size - i;
+            insertion_sort_array[i] = array_size - i;
+            selection_sort_array[i] = array_size - i;
+        }
+    } else {
+        for (i = array_size - 1; i >= 0; i--) {
+            bubble_sort_array[i] = rand();
+            insertion_sort_array[i] = rand();
+            selection_sort_array[i] = rand();
+        }
     }
 
     bubble_sort(bubble_sort_array, array_size);
